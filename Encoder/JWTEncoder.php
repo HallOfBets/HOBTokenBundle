@@ -77,7 +77,7 @@ class JWTEncoder implements JWTEncoderInterface
     protected function getPrivateKey()
     {
         if(is_null($this->privateKey)) {
-            throw new ParameterNotFoundException("Missing 'privateKey' parameter in JWTEncoder");
+            throw new ParameterNotFoundException("'privateKey' in JWTEncoder");
         }
 
         return openssl_pkey_get_private('file://' . $this->privateKey, $this->passPhrase);
@@ -89,7 +89,7 @@ class JWTEncoder implements JWTEncoderInterface
     protected function getPublicKey()
     {
         if(is_null($this->publicKey)) {
-            throw new ParameterNotFoundException("Missing 'publicKey' parameter in JWTEncoder");
+            throw new ParameterNotFoundException("'publicKey' in JWTEncoder");
         }
 
         return openssl_pkey_get_public('file://' . $this->publicKey);
