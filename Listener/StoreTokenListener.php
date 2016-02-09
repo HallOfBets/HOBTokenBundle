@@ -5,6 +5,7 @@ use HOB\TokenBundle\Builder\TokenBuilder;
 use HOB\TokenBundle\Storage\TokenStorage;
 use HOB\TokenBundle\TokenExtractor\TokenExtractorInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 /**
  * Class StoreTokenListener
@@ -57,10 +58,13 @@ class StoreTokenListener
         // Check master request
         if (!$event->isMasterRequest()) { return; }
 
-        var_dump($this->tokenConfig);die;
-
         // Extract token from request
         $tokenString = $this->tokenExtractor->extract($event->getRequest());
+
+        // Check if token if required
+        if($this->tokenConfig['required'] && $tokenString === false) {
+            throw new UnauthorizedHttpException("Invalid access token");
+        }
 
         // Build token
         $token = $this->tokenBuilder->buildFromString($tokenString);
