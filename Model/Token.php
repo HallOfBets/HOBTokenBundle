@@ -22,6 +22,10 @@ class Token
      */
     private $ip;
 
+    /**
+     * @var integer
+     */
+    private $userId;
 
     /**
      * @return int
@@ -69,5 +73,29 @@ class Token
     public function setIp($ip)
     {
         $this->ip = $ip;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUserId()
+    {
+        return $this->userId;
+    }
+
+    /**
+     * @param int $userId
+     */
+    public function setUserId($userId)
+    {
+        $this->userId = $userId;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isLogged()
+    {
+        return !is_null($this->userId) && $this->userId > 0;
     }
 }

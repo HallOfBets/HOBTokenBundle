@@ -29,7 +29,7 @@ class TokenBuilder
      * @param $tokenString
      * @return Token
      */
-    public function fromTokenString($tokenString)
+    public function buildFromString($tokenString)
     {
         $payload = $this->JWTEncoder->decode($tokenString);
 

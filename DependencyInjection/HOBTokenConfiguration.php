@@ -15,6 +15,12 @@ class HOBTokenConfiguration implements ConfigurationInterface
         $treeBuilder    = new TreeBuilder();
         $rootNode       = $treeBuilder->root('hob_token_bundle');
 
+        $rootNode->children()
+            ->booleanNode('required')
+                ->defaultTrue()
+            ->end()
+        ->end();
+
         return $treeBuilder;
     }
 }
