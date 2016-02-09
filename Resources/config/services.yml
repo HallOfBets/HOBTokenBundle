@@ -29,6 +29,6 @@ services:
 #### LISTENERS ####
     hob.token.listener.store_token:
         class: Sportnco\ApiCommonBundle\EventListener\RequestListener
-        arguments: [ '%api_common.config%', '@hob.token.storage', '@hob.token.extractor.authorization', '@hob.token.builder']
+        arguments: [ '%hob_token_bundle.config%', '@hob.token.storage', '@hob.token.extractor.authorization', '@hob.token.builder']
         tags:
             - { name: kernel.event_listener, event: kernel.request, priority: -2 }
