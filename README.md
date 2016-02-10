@@ -1,6 +1,6 @@
 # README
 
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/d2080982-fddd-4880-a5ec-c7fc9ccf7608/big.png)](https://insight.sensiolabs.com/projects/d2080982-fddd-4880-a5ec-c7fc9ccf7608)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/397e9aab-d4d2-4ef0-a947-7236a4d1adae/big.png)](https://insight.sensiolabs.com/projects/397e9aab-d4d2-4ef0-a947-7236a4d1adae)
 
 ## Installation
 To install this bundle, run the command below and you will get the latest version.
