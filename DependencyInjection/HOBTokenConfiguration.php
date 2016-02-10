@@ -5,15 +5,15 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 /**
- * Class CommonBundleConfiguration
- * @package HOB\CommonBundle\DependencyInjection
+ * Class HOBTokenConfiguration
+ * @package HOB\TokenBundle\DependencyInjection
  */
 class HOBTokenConfiguration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder()
     {
         $treeBuilder    = new TreeBuilder();
-        $rootNode       = $treeBuilder->root('hob_token_bundle');
+        $rootNode       = $treeBuilder->root('hob_token');
 
         $rootNode->children()
             ->booleanNode('required')
