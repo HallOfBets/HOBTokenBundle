@@ -14,9 +14,9 @@ use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 class StoreTokenListener
 {
     /**
-     * @var array
+     * @var boolean
      */
-    private $tokenConfig;
+    private $tokenRequired;
 
     /**
      * @var TokenStorage
@@ -36,14 +36,14 @@ class StoreTokenListener
 
     /**
      * StoreTokenListener constructor.
-     * @param array $tokenConfig
+     * @param $tokenRequired
      * @param TokenStorage $tokenStorage
      * @param TokenExtractorInterface $tokenExtractor
      * @param TokenBuilder $tokenBuilder
      */
-    public function __construct(array $tokenConfig, TokenStorage $tokenStorage, TokenExtractorInterface $tokenExtractor, TokenBuilder $tokenBuilder)
+    public function __construct($tokenRequired, TokenStorage $tokenStorage, TokenExtractorInterface $tokenExtractor, TokenBuilder $tokenBuilder)
     {
-        $this->tokenConfig    = $tokenConfig;
+        $this->tokenRequired  = $tokenRequired;
         $this->tokenStorage   = $tokenStorage;
         $this->tokenExtractor = $tokenExtractor;
         $this->tokenBuilder   = $tokenBuilder;
@@ -62,7 +62,7 @@ class StoreTokenListener
         $tokenString = $this->tokenExtractor->extract($event->getRequest());
 
         // Check if token if required
-        if($this->tokenConfig['required'] && $tokenString === false) {
+        if($this->tokenRequired && $tokenString === false) {
             throw new UnauthorizedHttpException("Invalid access token");
         }
 

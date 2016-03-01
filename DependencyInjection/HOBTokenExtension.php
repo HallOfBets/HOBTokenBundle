@@ -22,7 +22,8 @@ class HOBTokenExtension extends Extension
         $configuration = new HOBTokenConfiguration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $container->setParameter($this->getAlias().'.config', $config);
+        $container->setParameter($this->getAlias().'.config.required', $config['required']);
+        $container->setParameter($this->getAlias().'.config.storage.priority', $config['storage']['priority']);
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
