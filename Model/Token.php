@@ -18,14 +18,23 @@ class Token
     private $apiKey;
 
     /**
-     * @var integer
+     * @var array
      */
-    private $ip;
+    private $context;
 
     /**
-     * @var integer
+     * @var null|array
      */
-    private $userId;
+    private $user;
+
+
+    /**
+     * Token constructor.
+     */
+    public function __construct()
+    {
+        $this->context = [];
+    }
 
     /**
      * @return int
@@ -60,35 +69,19 @@ class Token
     }
 
     /**
-     * @return int
+     * @return array|null
      */
-    public function getIp()
+    public function getUser()
     {
-        return $this->ip;
+        return $this->user;
     }
 
     /**
-     * @param int $ip
+     * @param array $user
      */
-    public function setIp($ip)
+    public function setUser(array $user)
     {
-        $this->ip = $ip;
-    }
-
-    /**
-     * @return int
-     */
-    public function getUserId()
-    {
-        return $this->userId;
-    }
-
-    /**
-     * @param int $userId
-     */
-    public function setUserId($userId)
-    {
-        $this->userId = $userId;
+        $this->user = $user;
     }
 
     /**
@@ -96,6 +89,37 @@ class Token
      */
     public function isLogged()
     {
-        return !is_null($this->userId) && $this->userId > 0;
+        return !is_null($this->user);
+    }
+
+    /**
+     * @return array
+     */
+    public function getContext()
+    {
+        return $this->context;
+    }
+
+    /**
+     * @param $key
+     * @return bool
+     */
+    public function hasContext($key)
+    {
+        return isset($this->context[$key]);
+    }
+
+    /**
+     * @param $key
+     * @param $value
+     * @param bool $overwrite
+     */
+    public function addContext($key, $value, $overwrite = false)
+    {
+        if($this->hasContext($key) && $overwrite === false) {
+            throw new \RuntimeException(sprintf("Token context '%s' already exists", $key));
+        }
+
+        $this->context[$key] = $value;
     }
 }

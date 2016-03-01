@@ -37,7 +37,9 @@ class TokenBuilder
         $token = new Token();
         $token->setId($payload['id']);
         $token->setApiKey($payload['apiKey']);
-        $token->setIp($payload['ip']);
+
+        $token->addContext('clientIp', $payload['ip']);
+        $token->addContext('clientAgent', $payload['agent']);
 
         return $token;
     }
