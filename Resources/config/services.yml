@@ -31,4 +31,4 @@ services:
         class: HOB\TokenBundle\Listener\StoreTokenListener
         arguments: [ '%hob_token.config.required%', '@hob.token.storage', '@hob.token.extractor.authorization', '@hob.token.builder']
         tags:
-            - { name: kernel.event_listener, event: kernel.request, priority: '%hob_token.config.storage.priority%' }
+            - { name: kernel.event_listener, event: kernel.request, priority: 0 }

@@ -19,11 +19,6 @@ class HOBTokenConfiguration implements ConfigurationInterface
             ->booleanNode('required')
                 ->defaultTrue()
             ->end()
-            ->arrayNode('storage')
-                ->integerNode('priority')
-                    ->defaultValue(0)
-                ->end()
-            ->end()
         ->end();
 
         return $treeBuilder;
