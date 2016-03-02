@@ -1,9 +1,7 @@
 <?php
 namespace HOB\TokenBundle\Listener;
 
-use HOB\TokenBundle\Builder\TokenBuilder;
-use HOB\TokenBundle\Storage\TokenStorage;
-use HOB\TokenBundle\TokenExtractor\TokenExtractorInterface;
+use HOB\TokenBundle\Model\TokenManager;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
@@ -19,34 +17,20 @@ class StoreTokenListener
     private $tokenRequired;
 
     /**
-     * @var TokenStorage
+     * @var TokenManager
      */
-    private $tokenStorage;
-
-    /**
-     * @var TokenExtractorInterface
-     */
-    private $tokenExtractor;
-
-    /**
-     * @var TokenBuilder
-     */
-    private $tokenBuilder;
+    private $tokenManager;
 
 
     /**
      * StoreTokenListener constructor.
      * @param $tokenRequired
-     * @param TokenStorage $tokenStorage
-     * @param TokenExtractorInterface $tokenExtractor
-     * @param TokenBuilder $tokenBuilder
+     * @param TokenManager $tokenManager
      */
-    public function __construct($tokenRequired, TokenStorage $tokenStorage, TokenExtractorInterface $tokenExtractor, TokenBuilder $tokenBuilder)
+    public function __construct($tokenRequired, TokenManager $tokenManager)
     {
         $this->tokenRequired  = $tokenRequired;
-        $this->tokenStorage   = $tokenStorage;
-        $this->tokenExtractor = $tokenExtractor;
-        $this->tokenBuilder   = $tokenBuilder;
+        $this->tokenManager   = $tokenManager;
     }
 
     /**
@@ -58,18 +42,11 @@ class StoreTokenListener
         // Check master request
         if (!$event->isMasterRequest()) { return; }
 
-        // Extract token from request
-        $tokenString = $this->tokenExtractor->extract($event->getRequest());
+        $token = $this->tokenManager->extractFromRequest($event->getRequest());
 
         // Check if token if required
-        if($this->tokenRequired && $tokenString === false) {
+        if($this->tokenRequired && $token === false) {
             throw new UnauthorizedHttpException("Invalid access token");
         }
-
-        // Build token
-        $token = $this->tokenBuilder->buildFromString($tokenString);
-
-        // Store token
-        $this->tokenStorage->setToken($token);
     }
 }

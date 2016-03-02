@@ -26,9 +26,13 @@ services:
         class: HOB\TokenBundle\Storage\TokenStorage
         arguments: ['@hob.token.encoder']
 
+    hob.token:
+        class: HOB\TokenBundle\Model\TokenManager
+        arguments: ['@hob.token.storage', '@hob.token.extractor.authorization', '@hob.token.builder']
+
 #### LISTENERS ####
     hob.token.listener.store_token:
         class: HOB\TokenBundle\Listener\StoreTokenListener
-        arguments: [ '%hob_token.config.required%', '@hob.token.storage', '@hob.token.extractor.authorization', '@hob.token.builder']
+        arguments: [ '%hob_token.config.required%', '@hob.token']
         tags:
             - { name: kernel.event_listener, event: kernel.request, priority: 0 }
